@@ -19,23 +19,28 @@
 #define RIGHT_MEDIUM "right_medium"
 #define RIGHT_FAST "right_fast"
 
-#define HIT "hit"
+#define HIT_SLOW "hit_slow"
+#define HIT_MEDIUM "hit_medium"
+#define HIT_FAST "hit_fast"
 
 int yValue = 0; // To store value of the Y axis
+
 int pressureValue;
 int initialPressureValue;
+int pressureDifference;
 
 void setup() {
   Serial.begin(9600) ;
 
-  // initialPressureValue = analogRead(PRESSURE_PIN);
+  initialPressureValue = analogRead(PRESSURE_PIN);
 
 }
 
 void loop() {
 
   // Serial.println(initialPressureValue);
-  while(digitalRead(HIT_PIN) == HIGH){
+  pressureValue = analogRead(PRESSURE_PIN) - initialPressureValue;
+  while(pressureValue <= 10){
     // Serial.println(pressureValue);
     yValue = analogRead(VRY_PIN);
     if(yValue >= 550 && yValue < 707){
@@ -62,9 +67,13 @@ void loop() {
       Serial.println(RIGHT_FAST);
       delay(500);
     }
+
+    pressureValue = analogRead(PRESSURE_PIN) - initialPressureValue;
   }
 
-  Serial.println(HIT);
+  if(pressureValue < 341) Serial.println(HIT_SLOW);
+  else if(pressureValue >= 341 && pressureValue < 682) Serial.println(HIT_MEDIUM);
+  else if(pressureValue >= 682 && pressureValue < 1024) Serial.println(HIT_FAST);
 
   delay(1000);
 }
