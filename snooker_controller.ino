@@ -1,11 +1,3 @@
-/*
- * Created by ArduinoGetStarted.com
- *
- * This example code is in the public domain
- *
- * Tutorial page: https://arduinogetstarted.com/tutorials/arduino-joystick
- */
-
 #define VRX_PIN  A5 // Arduino pin connected to VRX pin
 #define VRY_PIN  A4 // Arduino pin connected to VRY pin
 // #define PRESSURE_PIN A3
@@ -38,10 +30,8 @@ void setup() {
 
 void loop() {
 
-  // Serial.println(initialPressureValue);
   pressureValue = analogRead(PRESSURE_PIN) - initialPressureValue;
   while(pressureValue <= 10){
-    // Serial.println(pressureValue);
     yValue = analogRead(VRY_PIN);
     if(yValue >= 550 && yValue < 707){
       Serial.println(LEFT_SLOW);
